@@ -4,7 +4,7 @@ const ReactHighcharts = require('react-highcharts');
 
 const config = {
   chart: {
-    renderTo: 'container',
+    renderTo: 'main',
     type: 'stockChart'
   },
   title: {
@@ -22,7 +22,7 @@ const config = {
 }
 
 
-ReactDOM.render(<ReactHighcharts config={config}></ReactHighcharts>)
+ReactDOM.render(<ReactHighcharts config={config}></ReactHighcharts>, document.getElementById('main'));
 
 
 
