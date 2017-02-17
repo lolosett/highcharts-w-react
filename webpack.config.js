@@ -10,10 +10,15 @@ const webpack_config = {
     path: path.resolve(__dirname, './dist'),
   },
   module: {
-    loaders: [{
-      exclude: '/node_modules',
-      loader: 'babel'
-    }]
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: '/node_modules',
+        use: {
+          loader: 'babel-loader'
+        }
+      }
+    ]
   }
 }
 
