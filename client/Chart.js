@@ -14,11 +14,14 @@ export default class Chart extends Component {
           text: "CHART"
         },
         xAxis: {
-          categories: ['jan', 'feb', 'march', 'april', 'may', 'june', 'july']
+          type: 'datetime'
         },
+        //map series data (conversions) to this prop
         series: [
           {
-            data:[1,2,3,4,5,6,7]
+            data:[2,2,4,5,213,324,1232,65462,324112432,63245145,845624134,3124214,2,3,4,5,6,7],
+            pointStart: Date.UTC(2017, 0, 1),
+            pointInterval: 3600 * 1000 * 24 //update per day
           }
         ]
       }
