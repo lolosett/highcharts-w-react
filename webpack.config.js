@@ -4,11 +4,17 @@ const webpack = require('webpack');
 const webpack_config = {
   context: path.resolve(__dirname, './client'),
   entry : {
-    app: './app.js'},
+    app: './app.js'
+  },
   output: {
     filename: 'app.bundle.js',
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './client'),
   },
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    })
+  ],
   module: {
     rules: [
       {
