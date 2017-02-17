@@ -7,6 +7,12 @@ export default class Chart extends Component {
     super(props);
     this.state = {
       config : {
+        chart: {
+          zoomType: 'x'
+        },
+        title: {
+          text: "CHART"
+        },
         xAxis: {
           categories: ['jan', 'feb', 'march', 'april', 'may', 'june', 'july']
         },

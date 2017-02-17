@@ -13749,6 +13749,12 @@ var Chart = function (_Component) {
 
     _this.state = {
       config: {
+        chart: {
+          zoomType: 'x'
+        },
+        title: {
+          text: "CHART"
+        },
         xAxis: {
           categories: ['jan', 'feb', 'march', 'april', 'may', 'june', 'july']
         },
