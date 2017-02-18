@@ -1,19 +1,6 @@
-const express = require('express');
-const path = require('path');
-const app = express();
-const port = process.env.PORT || 8080;
-const Dummy = require('./dummydata-controller');
-
-app.set('port', port);
-
-app.use(express.static(path.join(__dirname, '../client')));
-
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '../client/index.html')
-});
-
-app.get('/dummydata', function(req, res){
-  res.send([{
+const getFakeData = function(){
+  return
+  [{
 		"test": "67",
 	},
 	{
@@ -312,8 +299,5 @@ app.get('/dummydata', function(req, res){
 	},
 	{
 		"test": "24",
-	}])
-});
-
-app.listen(port);
-console.log('server now listening on port ', port);
+	}]
+};
