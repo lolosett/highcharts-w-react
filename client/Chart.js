@@ -30,10 +30,10 @@ export default class Chart extends Component {
   //function to retrieve dummy data from server
 
   getData(){
-    const that = this;
     console.log('inside getData');
+
     axios.get('/dummydata')
-      .then(function(response){
+      .then(response => {
         //collect data
         console.log('response: ', response)
         //create array of parsed data
@@ -41,7 +41,10 @@ export default class Chart extends Component {
         for(const obj in response.data){
           filter.push(parseInt(obj));
         }
-        that.setState({config : })
+
+        let newSeries = [Object.assign({}, {data: filter}, this.state.config.series[0])];
+        //setState ---- config[series][0].data = filter
+        this.setState({config: {series: newSeries}});
       })
   }
 
