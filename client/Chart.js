@@ -30,11 +30,18 @@ export default class Chart extends Component {
   //function to retrieve dummy data from server
 
   getData(){
+    const that = this;
     console.log('inside getData');
     axios.get('/dummydata')
       .then(function(response){
         //collect data
         console.log('response: ', response)
+        //create array of parsed data
+        let filter = [];
+        for(const obj in response.data){
+          filter.push(parseInt(obj));
+        }
+        that.setState({config : })
       })
   }
 
