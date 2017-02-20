@@ -30,8 +30,6 @@ export default class Chart extends Component {
   //function to retrieve dummy data from server
 
   getData(){
-    console.log('inside getData');
-
     axios.get('/dummydata')
       .then(response => {
         //collect data
@@ -43,6 +41,7 @@ export default class Chart extends Component {
         }
 
         let newSeries = [Object.assign({}, {data: filter}, this.state.config.series[0])];
+
         //setState ---- config[series][0].data = filter
         this.setState({config: {series: newSeries}});
       })
