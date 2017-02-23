@@ -40,14 +40,10 @@ export default class Chart extends Component {
           filter.push(val.cumulative_conversion_rate);
         })
 
+        //Create a new series object with incoming data. 
         let newSeries = [Object.assign({}, this.state.config.series[0], {data : filter})];
-        console.log('newSeries: ', newSeries);
-
-        console.log("this.state spread: ", this.state)
 
         this.setState({config: {...this.state.config, series: newSeries}});
-
-        setTimeout(console.log('this.state.config after set state: ', this.state.config), 5000);
       })
   }
 

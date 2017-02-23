@@ -9532,14 +9532,10 @@ var Chart = function (_Component) {
           filter.push(val.cumulative_conversion_rate);
         });
 
+        //Create a new series object with incoming data. 
         var newSeries = [Object.assign({}, _this2.state.config.series[0], { data: filter })];
-        console.log('newSeries: ', newSeries);
-
-        console.log("this.state spread: ", _this2.state);
 
         _this2.setState({ config: _extends({}, _this2.state.config, { series: newSeries }) });
-
-        setTimeout(console.log('this.state.config after set state: ', _this2.state.config), 5000);
       });
     }
   }, {
