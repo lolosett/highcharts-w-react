@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactHighCharts from 'react-highcharts';
 import axios from 'axios';
+import update from 'react-addons-update';
 
 export default class Chart extends Component {
   constructor(props) {
@@ -44,7 +45,7 @@ export default class Chart extends Component {
 
         console.log("this.state spread: ", this.state)
 
-        this.setState(...this.state,  newSeries);
+        this.setState({config: {...this.state.config, series: newSeries}});
 
         setTimeout(console.log('this.state.config after set state: ', this.state.config), 5000);
       })
