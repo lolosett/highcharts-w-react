@@ -9515,6 +9515,7 @@ var Chart = function (_Component) {
             fontSize: '45px'
           }
         },
+
         xAxis: {
           type: 'datetime',
           title: {
@@ -9531,6 +9532,7 @@ var Chart = function (_Component) {
           },
           gridLineColor: '#525265'
         },
+
         yAxis: {
           title: {
             text: "Cumulative Conversion Rate",

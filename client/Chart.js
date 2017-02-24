@@ -27,6 +27,7 @@ export default class Chart extends Component {
             fontSize: '45px'
           }
         },
+
         xAxis: {
           type: 'datetime',
           title: {
@@ -43,6 +44,7 @@ export default class Chart extends Component {
           },
           gridLineColor: '#525265'
         },
+
         yAxis: {
           title: {
             text: "Cumulative Conversion Rate",
