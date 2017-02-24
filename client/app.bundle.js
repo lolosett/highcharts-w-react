@@ -9528,7 +9528,8 @@ var Chart = function (_Component) {
             style: {
               color: '#9f9faa'
             }
-          }
+          },
+          gridLineColor: '#525265'
         },
         yAxis: {
           title: {

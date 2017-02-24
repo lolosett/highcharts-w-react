@@ -40,7 +40,8 @@ export default class Chart extends Component {
             style: {
               color: '#9f9faa'
             }
-          }
+          },
+          gridLineColor: '#525265'
         },
         yAxis: {
           title: {
