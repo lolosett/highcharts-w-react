@@ -30,7 +30,7 @@ export default class Chart extends Component {
         xAxis: {
           type: 'datetime',
           title: {
-            text: "Time (ms)",
+            text: "Date",
             style: {
               color:'#9f9faa',
               'fontSize': '20px'
@@ -75,21 +75,20 @@ export default class Chart extends Component {
       .then(response => {
         //collect data, push parsed values into new array
         let filter = [],
-            cat = [],
             dataCollection = response.data.experiment.variations[0].conversion_rate_hourly;
             console.log('dataCollection: ', dataCollection)
 
         dataCollection.forEach((val, index, collection) =>{
           filter.push([val.time, val.cumulative_conversion_rate]);
-          // cat.push(val.time)
         })
 
         //Create a new series object with incoming data.
         let newSeries = [Object.assign({}, this.state.config.series[0], {data : filter})];
-        // let newxAxCat = Object.assign({}, this.state.config.xAxis, { categories: cat });
-        //   console.log('newxAxCat: ', newxAxCat)
+          console.log('newSeries:', newSeries)
 
         this.setState({config: {...this.state.config, series: newSeries}});
+
+        setTimeout(console.log('state after setstate: ', this.state), 5000)
       })
   }
 

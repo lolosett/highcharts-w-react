@@ -9518,7 +9518,7 @@ var Chart = function (_Component) {
         xAxis: {
           type: 'datetime',
           title: {
-            text: "Time (ms)",
+            text: "Date",
             style: {
               color: '#9f9faa',
               'fontSize': '20px'
@@ -9567,21 +9567,20 @@ var Chart = function (_Component) {
       _axios2.default.get('/dummydata').then(function (response) {
         //collect data, push parsed values into new array
         var filter = [],
-            cat = [],
             dataCollection = response.data.experiment.variations[0].conversion_rate_hourly;
         console.log('dataCollection: ', dataCollection);
 
         dataCollection.forEach(function (val, index, collection) {
           filter.push([val.time, val.cumulative_conversion_rate]);
-          // cat.push(val.time)
         });
 
         //Create a new series object with incoming data.
         var newSeries = [Object.assign({}, _this2.state.config.series[0], { data: filter })];
-        // let newxAxCat = Object.assign({}, this.state.config.xAxis, { categories: cat });
-        //   console.log('newxAxCat: ', newxAxCat)
+        console.log('newSeries:', newSeries);
 
         _this2.setState({ config: _extends({}, _this2.state.config, { series: newSeries }) });
+
+        setTimeout(console.log('state after setstate: ', _this2.state), 5000);
       });
     }
   }, {
