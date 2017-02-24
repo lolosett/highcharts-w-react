@@ -9466,7 +9466,7 @@ var _react = __webpack_require__(81);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactHighcharts = __webpack_require__(206);
+var _reactHighcharts = __webpack_require__(207);
 
 var _reactHighcharts2 = _interopRequireDefault(_reactHighcharts);
 
@@ -9474,7 +9474,7 @@ var _axios = __webpack_require__(188);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _reactAddonsUpdate = __webpack_require__(207);
+var _reactAddonsUpdate = __webpack_require__(206);
 
 var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
@@ -9497,14 +9497,52 @@ var Chart = function (_Component) {
     _this.state = {
       config: {
         chart: {
-          zoomType: 'x'
+          style: {
+            fontFamily: " 'Open Sans', sans-serif"
+          },
+          zoomType: 'x',
+          className: 'chart',
+          backgroundColor: '#3e3e54',
+          color: '#9f9faa'
         },
         title: {
-          text: "example chart"
+          className: 'pleasework',
+          text: "Example Cumulative Conversion Rate",
+          style: {
+            color: '#9f9faa',
+            fontSize: '45px'
+          }
         },
         xAxis: {
-          type: 'datetime'
+          type: 'miliseconds',
+          title: {
+            text: "Time (ms)",
+            style: {
+              color: '#9f9faa',
+              'fontSize': '20px'
+            }
+          },
+          labels: {
+            style: {
+              color: '#9f9faa'
+            }
+          }
         },
+        yAxis: {
+          title: {
+            text: "Cumulative Conversion Rate",
+            style: {
+              color: '#9f9faa',
+              fontSize: '20px'
+            }
+          },
+          labels: {
+            style: {
+              color: '#9f9faa'
+            }
+          }
+        },
+        colors: ['#57bf93'],
         series: [{
           data: [1, 2, 3, 5, 6, 3, 4, 21, 2],
           pointStart: Date.UTC(2017, 1, 1),
@@ -9526,13 +9564,15 @@ var Chart = function (_Component) {
       _axios2.default.get('/dummydata').then(function (response) {
         //collect data, push parsed values into new array
         var filter = [],
+            intervals = [],
             dataCollection = response.data.experiment.variations[0].conversion_rate_hourly;
+        console.log('dataCollection: ', dataCollection);
 
         dataCollection.forEach(function (val, index, collection) {
           filter.push(val.cumulative_conversion_rate);
         });
 
-        //Create a new series object with incoming data. 
+        //Create a new series object with incoming data.
         var newSeries = [Object.assign({}, _this2.state.config.series[0], { data: filter })];
 
         _this2.setState({ config: _extends({}, _this2.state.config, { series: newSeries }) });
@@ -9556,39 +9596,6 @@ var Chart = function (_Component) {
 
   return Chart;
 }(_react.Component);
-
-// function isObject(item) {
-//     return (item && typeof item === 'object' && !Array.isArray(item) && item !== null);
-// }
-//
-// function mergeDeep(target, source) {
-//   let output = Object.assign({}, target);
-//   if (isObject(target) && isObject(source)) {
-//     Object.keys(source).forEach(key => {
-//       if (isObject(source[key])) {
-//         if (!(key in target))
-//           Object.assign(output, { [key]: source[key] });
-//         else
-//           output[key] = mergeDeep(target[key], source[key]);
-//       } else {
-//         Object.assign(output, { [key]: source[key] });
-//       }
-//     });
-//   }
-//   return output;
-// }
-//
-// let merged = mergeDeep(this.state.config.series[0], {data:filter});
-// console.log('merged', merged)
-//
-// let test = {
-//   a: 1,
-//   b: 2,
-//   c: 3
-// }
-// let together = {d:4, ...test}
-// console.log('together', together)
-
 
 exports.default = Chart;
 
@@ -27596,6 +27603,15 @@ module.exports = function spread(callback) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+module.exports = __webpack_require__(208);
+
+/***/ }),
+/* 207 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -27656,15 +27672,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }]);
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(187)(module)))
-
-/***/ }),
-/* 207 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(208);
 
 /***/ }),
 /* 208 */
