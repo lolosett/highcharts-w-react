@@ -84,11 +84,8 @@ export default class Chart extends Component {
 
         //Create a new series object with incoming data.
         let newSeries = [Object.assign({}, this.state.config.series[0], {data : filter})];
-          console.log('newSeries:', newSeries)
 
         this.setState({config: {...this.state.config, series: newSeries}});
-
-        setTimeout(console.log('state after setstate: ', this.state), 5000)
       })
   }
 

@@ -9576,11 +9576,8 @@ var Chart = function (_Component) {
 
         //Create a new series object with incoming data.
         var newSeries = [Object.assign({}, _this2.state.config.series[0], { data: filter })];
-        console.log('newSeries:', newSeries);
 
         _this2.setState({ config: _extends({}, _this2.state.config, { series: newSeries }) });
-
-        setTimeout(console.log('state after setstate: ', _this2.state), 5000);
       });
     }
   }, {
