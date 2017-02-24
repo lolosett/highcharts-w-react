@@ -9498,12 +9498,15 @@ var Chart = function (_Component) {
       config: {
         chart: {
           style: {
-            fontFamily: " 'Open Sans', sans-serif"
+            fontFamily: "'Open Sans', sans-serif"
           },
           zoomType: 'x',
           className: 'chart',
           backgroundColor: '#3e3e54',
           color: '#9f9faa'
+        },
+        legend: {
+          enabled: false
         },
         title: {
           className: 'pleasework',
@@ -9514,7 +9517,7 @@ var Chart = function (_Component) {
           }
         },
         xAxis: {
-          type: 'miliseconds',
+          type: 'datetime',
           title: {
             text: "Time (ms)",
             style: {
@@ -9546,7 +9549,8 @@ var Chart = function (_Component) {
         series: [{
           data: [1, 2, 3, 5, 6, 3, 4, 21, 2],
           pointStart: Date.UTC(2017, 1, 1),
-          pointInterval: 3600 * 1000 * 24 //update per day
+          pointInterval: 3600 * 1000 * 24, //update per day
+          name: 'CCR'
         }]
       }
     };
@@ -9564,16 +9568,19 @@ var Chart = function (_Component) {
       _axios2.default.get('/dummydata').then(function (response) {
         //collect data, push parsed values into new array
         var filter = [],
-            intervals = [],
+            cat = [],
             dataCollection = response.data.experiment.variations[0].conversion_rate_hourly;
         console.log('dataCollection: ', dataCollection);
 
         dataCollection.forEach(function (val, index, collection) {
           filter.push(val.cumulative_conversion_rate);
+          cat.push(val.time);
         });
 
         //Create a new series object with incoming data.
         var newSeries = [Object.assign({}, _this2.state.config.series[0], { data: filter })];
+        // let newxAxCat = Object.assign({}, this.state.config.xAxis, { categories: cat });
+        //   console.log('newxAxCat: ', newxAxCat)
 
         _this2.setState({ config: _extends({}, _this2.state.config, { series: newSeries }) });
       });

@@ -10,12 +10,15 @@ export default class Chart extends Component {
       config : {
         chart: {
           style: {
-            fontFamily: " 'Open Sans', sans-serif"
+            fontFamily: "'Open Sans', sans-serif"
           },
           zoomType: 'x',
           className: 'chart',
           backgroundColor:'#3e3e54',
           color: '#9f9faa'
+        },
+        legend : {
+          enabled: false
         },
         title: {
           className: 'pleasework',
@@ -26,7 +29,7 @@ export default class Chart extends Component {
           }
         },
         xAxis: {
-          type: 'miliseconds',
+          type: 'datetime',
           title: {
             text: "Time (ms)",
             style: {
@@ -58,7 +61,8 @@ export default class Chart extends Component {
         series: [{
             data: [1,2,3,5,6,3,4,21,2],
             pointStart: Date.UTC(2017, 1, 1),
-            pointInterval: 3600 * 1000 * 24 //update per day
+            pointInterval: 3600 * 1000 * 24, //update per day
+            name: 'CCR'
           }]
       }
     }
@@ -72,16 +76,19 @@ export default class Chart extends Component {
       .then(response => {
         //collect data, push parsed values into new array
         let filter = [],
-            intervals = [],
+            cat = [],
             dataCollection = response.data.experiment.variations[0].conversion_rate_hourly;
             console.log('dataCollection: ', dataCollection)
 
         dataCollection.forEach((val, index, collection) =>{
           filter.push(val.cumulative_conversion_rate);
+          cat.push(val.time)
         })
 
         //Create a new series object with incoming data.
         let newSeries = [Object.assign({}, this.state.config.series[0], {data : filter})];
+        // let newxAxCat = Object.assign({}, this.state.config.xAxis, { categories: cat });
+        //   console.log('newxAxCat: ', newxAxCat)
 
         this.setState({config: {...this.state.config, series: newSeries}});
       })
