@@ -21,7 +21,6 @@ export default class Chart extends Component {
           enabled: false
         },
         title: {
-          className: 'pleasework',
           text: "Example Cumulative Conversion Rate",
           style: {
             color: '#9f9faa',
@@ -81,8 +80,8 @@ export default class Chart extends Component {
             console.log('dataCollection: ', dataCollection)
 
         dataCollection.forEach((val, index, collection) =>{
-          filter.push(val.cumulative_conversion_rate);
-          cat.push(val.time)
+          filter.push([val.time, val.cumulative_conversion_rate]);
+          // cat.push(val.time)
         })
 
         //Create a new series object with incoming data.
