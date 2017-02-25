@@ -38,6 +38,7 @@ export default class Chart extends Component {
             }
           },
           labels: {
+            autoRotation: [-90],
             style: {
               color: '#9f9faa'
             }

@@ -9526,6 +9526,7 @@ var Chart = function (_Component) {
             }
           },
           labels: {
+            autoRotation: [-90],
             style: {
               color: '#9f9faa'
             }
