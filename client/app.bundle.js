@@ -14463,7 +14463,7 @@ var Chart = function (_Component) {
             }
           }
         },
-        colors: ['#57bf93'],
+        colors: ['#57bf93', '#6e25b7', '#b8e986', '#4886d2'],
         series: [{
           data: [1, 2, 3, 5, 6, 3, 4, 21, 2],
           pointStart: Date.UTC(2017, 1, 1),
