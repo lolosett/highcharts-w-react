@@ -77,19 +77,22 @@ export default class Chart extends Component {
   getData(){
     axios.get('/dummydata')
       .then(response => {
-        //collect data, push parsed values into new array
-        let filter = [],
-            dataCollection = response.data.experiment.variations[0].conversion_rate_hourly;
-            console.log('dataCollection: ', dataCollection)
+        //storage will replace current config.series
+        let storage = [];
+        let dataCollection = response.data.experiment.variations;
 
-        dataCollection.forEach((val, index, collection) =>{
-          filter.push([val.time, val.cumulative_conversion_rate]);
-        })
-
-        //Create a new series object with incoming data.
-        let newSeries = [Object.assign({}, this.state.config.series[0], {data : filter})];
-
-        this.setState({config: {...this.state.config, series: newSeries}});
+          dataCollection.forEach((val, i, coll)=>{
+              let data = [];
+              val.conversion_rate_hourly.forEach((item, index, collection)=>{
+                data.push([item.time, item.cumulative_conversion_rate])
+              })
+              storage.push({data,
+                pointStart: Date.UTC(2017, 1, 1),
+                pointInterval: 3600 * 1000 * 24, //update per day
+                name: 'CCR' });
+              data = [];
+          })
+        this.setState({config: {...this.state.config, series: storage}});
       })
   }
 
