@@ -86,10 +86,14 @@ export default class Chart extends Component {
               val.conversion_rate_hourly.forEach((item, index, collection)=>{
                 data.push([item.time, item.cumulative_conversion_rate])
               })
-              storage.push({data,
-                pointStart: Date.UTC(2017, 1, 1),
-                pointInterval: 3600 * 1000 * 24, //update per day
-                name: 'CCR' });
+              storage.push(
+                {
+                  data,
+                  pointStart: val.conversion_rate_hourly[0].time,
+                  pointInterval: 3600 * 1000 * 24, //update per day
+                  name: val.id
+                }
+              );
               data = [];
           })
         this.setState({config: {...this.state.config, series: storage}});

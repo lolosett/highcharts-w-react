@@ -14493,10 +14493,12 @@ var Chart = function (_Component) {
           val.conversion_rate_hourly.forEach(function (item, index, collection) {
             data.push([item.time, item.cumulative_conversion_rate]);
           });
-          storage.push({ data: data,
-            pointStart: Date.UTC(2017, 1, 1),
+          storage.push({
+            data: data,
+            pointStart: val.conversion_rate_hourly[0].time,
             pointInterval: 3600 * 1000 * 24, //update per day
-            name: 'CCR' });
+            name: val.id
+          });
           data = [];
         });
         _this2.setState({ config: _extends({}, _this2.state.config, { series: storage }) });
