@@ -1,5 +1,12 @@
 body{
   background-color: #3e3e54;
   color: white;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Raleway', sans-serif;
+}
+
+.dropdown {
+  background-color: #3e3e54;
+  border-radius: 50%;
+  height: 10%;
+  outline: none;
 }

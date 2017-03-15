@@ -7,10 +7,13 @@ export default class Chart extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      COT: [],
+      CCR: [],
       config : {
         chart: {
           style: {
-            fontFamily: "'Open Sans', sans-serif"
+            // fontFamily: "'Open Sans', sans-serif"
+            fontFamily: "'Raleway', sans-serif"
           },
           zoomType: 'x',
           className: 'chart',
@@ -35,12 +38,6 @@ export default class Chart extends Component {
             style: {
               color:'#9f9faa',
               'fontSize': '20px'
-            }
-          },
-          labels: {
-            autoRotation: [-90],
-            style: {
-              color: '#9f9faa'
             }
           },
           gridLineColor: '#525265'
@@ -70,6 +67,7 @@ export default class Chart extends Component {
       }
     }
     this.getData = this.getData.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   //function to retrieve dummy data from server
 
@@ -78,25 +76,37 @@ export default class Chart extends Component {
     axios.get('/dummydata')
       .then(response => {
         //storage will replace current config.series
-        let storage = [];
+        let CCRstorage = [];
+        let COTstorage = [];
         let dataCollection = response.data.experiment.variations;
+        console.log('dataCollection: ', dataCollection);
 
           dataCollection.forEach((val, i, coll)=>{
-              let data = [];
+              let CCRdata = [];
+              let COTdata = [];
               val.conversion_rate_hourly.forEach((item, index, collection)=>{
-                data.push([item.time, item.cumulative_conversion_rate])
+                CCRdata.push([item.time, item.cumulative_conversion_rate]);
+                COTdata.push([item.time, item.conversions]);
               })
-              storage.push(
+              CCRstorage.push(
                 {
-                  data,
+                  data: CCRdata,
                   pointStart: val.conversion_rate_hourly[0].time,
                   pointInterval: 3600 * 1000 * 24, //update per day
                   name: val.id
                 }
               );
-              data = [];
-          })
-        this.setState({config: {...this.state.config, series: storage}});
+              COTstorage.push({
+                data: COTdata,
+                pointStart: val.conversion_rate_hourly[0].time,
+                pointInterval: 3600 * 1000 * 24, //update per day
+                name: val.id
+              })
+              CCRdata = [];
+              COTdata = [];
+          });
+
+        this.setState({COT: COTstorage, CCR: CCRstorage, config: {...this.state.config, series: CCRstorage}});
       })
   }
 
@@ -104,11 +114,23 @@ export default class Chart extends Component {
     this.getData();
   }
 
+  handleChange(e){
+    if(e.target.value === "COT") {
+      this.setState({config: {...this.state.config, series: this.state.COT}})
+    } else {
+      this.setState({config: {...this.state.config, series: this.state.CCR}})
+    }
+  }
+
   render() {
-    return (
-      <div>
-        <ReactHighCharts config={this.state.config}></ReactHighCharts>
-      </div>
-    )
+        return (
+        <div>
+          <select className="dropdown" onChange={this.handleChange}>
+            <option value="CCR">Cumulative Conversion Rate</option>
+            <option value="COT">Conversions @ Time</option>
+          </select>
+          <ReactHighCharts config={this.state.config}></ReactHighCharts>
+        </div>
+      )
   }
 }

@@ -14410,10 +14410,13 @@ var Chart = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Chart.__proto__ || Object.getPrototypeOf(Chart)).call(this, props));
 
     _this.state = {
+      COT: [],
+      CCR: [],
       config: {
         chart: {
           style: {
-            fontFamily: "'Open Sans', sans-serif"
+            // fontFamily: "'Open Sans', sans-serif"
+            fontFamily: "'Raleway', sans-serif"
           },
           zoomType: 'x',
           className: 'chart',
@@ -14438,12 +14441,6 @@ var Chart = function (_Component) {
             style: {
               color: '#9f9faa',
               'fontSize': '20px'
-            }
-          },
-          labels: {
-            autoRotation: [-90],
-            style: {
-              color: '#9f9faa'
             }
           },
           gridLineColor: '#525265'
@@ -14473,6 +14470,7 @@ var Chart = function (_Component) {
       }
     };
     _this.getData = _this.getData.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
     return _this;
   }
   //function to retrieve dummy data from server
@@ -14485,23 +14483,35 @@ var Chart = function (_Component) {
 
       _axios2.default.get('/dummydata').then(function (response) {
         //storage will replace current config.series
-        var storage = [];
+        var CCRstorage = [];
+        var COTstorage = [];
         var dataCollection = response.data.experiment.variations;
+        console.log('dataCollection: ', dataCollection);
 
         dataCollection.forEach(function (val, i, coll) {
-          var data = [];
+          var CCRdata = [];
+          var COTdata = [];
           val.conversion_rate_hourly.forEach(function (item, index, collection) {
-            data.push([item.time, item.cumulative_conversion_rate]);
+            CCRdata.push([item.time, item.cumulative_conversion_rate]);
+            COTdata.push([item.time, item.conversions]);
           });
-          storage.push({
-            data: data,
+          CCRstorage.push({
+            data: CCRdata,
             pointStart: val.conversion_rate_hourly[0].time,
             pointInterval: 3600 * 1000 * 24, //update per day
             name: val.id
           });
-          data = [];
+          COTstorage.push({
+            data: COTdata,
+            pointStart: val.conversion_rate_hourly[0].time,
+            pointInterval: 3600 * 1000 * 24, //update per day
+            name: val.id
+          });
+          CCRdata = [];
+          COTdata = [];
         });
-        _this2.setState({ config: _extends({}, _this2.state.config, { series: storage }) });
+
+        _this2.setState({ COT: COTstorage, CCR: CCRstorage, config: _extends({}, _this2.state.config, { series: CCRstorage }) });
       });
     }
   }, {
@@ -14510,11 +14520,34 @@ var Chart = function (_Component) {
       this.getData();
     }
   }, {
+    key: 'handleChange',
+    value: function handleChange(e) {
+      if (e.target.value === "COT") {
+        this.setState({ config: _extends({}, this.state.config, { series: this.state.COT }) });
+      } else {
+        this.setState({ config: _extends({}, this.state.config, { series: this.state.CCR }) });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(
+          'select',
+          { className: 'dropdown', onChange: this.handleChange },
+          _react2.default.createElement(
+            'option',
+            { value: 'CCR' },
+            'Cumulative Conversion Rate'
+          ),
+          _react2.default.createElement(
+            'option',
+            { value: 'COT' },
+            'Conversions @ Time'
+          )
+        ),
         _react2.default.createElement(_reactHighcharts2.default, { config: this.state.config })
       );
     }
